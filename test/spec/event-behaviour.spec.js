@@ -14,7 +14,7 @@ define(['lib/adapters'], function(Adapters) {
       adapters.forEach(function(adapter) {
 
         beforeEach(function() {
-          setupComponent({
+          this.setupComponent({
             adapter: adapter,
             saveEvent: events.save,
             getEvent: events.get,
@@ -43,21 +43,21 @@ define(['lib/adapters'], function(Adapters) {
           });
 
           it('should announce that data was not written', function() {
-            spyOn(this.component, 'set').andThrow("I'm too full");
+            spyOn(this.component, 'set').and.throwError("I'm too full");
             var eventSpy = spyOnEvent(document, events.save + '-failure');
             this.component.trigger(events.save, {key:'foo', value:'bar'});
             expect(eventSpy).toHaveBeenTriggeredOn(document);
           });
 
           it('should announce that data was not retrieved', function() {
-            spyOn(this.component, 'get').andThrow("Uh oh, couldn't read the data store");
+            spyOn(this.component, 'get').and.throwError("Uh oh, couldn't read the data store");
             var eventSpy = spyOnEvent(document, events.get + '-failure');
             this.component.trigger(events.get, {key:'foo'});
             expect(eventSpy).toHaveBeenTriggeredOn(document);
           });
 
           it('should announce that data was not cleared', function() {
-            spyOn(this.component, 'clear').andThrow("You'll never destroy me!");
+            spyOn(this.component, 'clear').and.throwError("You'll never destroy me!");
             var eventSpy = spyOnEvent(document, events.clear + '-failure');
             this.component.trigger(events.clear);
             expect(eventSpy).toHaveBeenTriggeredOn(document);

@@ -8,7 +8,7 @@ define(['lib/adapters'], function(Adapters) {
       adapters.forEach(function(adapter) {
 
         beforeEach(function() {
-          setupComponent({
+          this.setupComponent({
             adapter: adapter
           });
         });
